@@ -53,7 +53,7 @@ sipak/
     └── user_handler.go        # manajemen user (admin)
 ```
 ⚙️ Konfigurasi Environment
-**Buat file .env di root project**:
+- **Buat file .env di root project**:
 
   -`MONGO_URI=mongodb+srv://user:password@cluster0.xxxxxx.mongodb.net/?retryWrites=true&w=majority`
   -`DB_NAME=sipak_db`
