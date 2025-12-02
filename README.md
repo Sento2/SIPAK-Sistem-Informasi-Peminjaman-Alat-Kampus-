@@ -1,6 +1,6 @@
 # 🎓 SIPAK — Sistem Informasi Peminjaman Alat Kampus
 
-SIPAK adalah aplikasi **REST API** berbasis **Golang** yang digunakan untuk mengelola peminjaman alat di kampus.  
+SIPAK adalah aplikasi berbasis **Golang** yang digunakan untuk mengelola peminjaman alat di kampus.  
 Fitur utama:
 
 - Manajemen akun **mahasiswa** & **admin**
