@@ -11,6 +11,7 @@ import (
 	"SIPAK/utils"
 
 	chimw "github.com/go-chi/chi/v5/middleware"
+	"github.com/rs/cors"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -25,9 +26,18 @@ func main() {
 	// 3. Setup router Chi
 	r := chi.NewRouter()
 
-	// Middleware bawaan chi (logging, recover dari panic, dll)
 	r.Use(chimw.Logger)
 	r.Use(chimw.Recoverer)
+
+	r.Use(cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"},
+		AllowedHeaders:   []string{"*"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: false,
+		MaxAge:           300,
+	}).Handler)
+
 
 	// Tambah middleware API key global untuk semua endpoint /api
 	r.Route("/api", func(api chi.Router) {

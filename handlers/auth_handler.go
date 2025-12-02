@@ -24,7 +24,7 @@ type registerRequest struct {
 	Nama     string `json:"nama"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
-	NIM	  string `json:"nim,omitempty"`
+	NIM	  	 string `json:"nim,omitempty"`
 	Jurusan  string `json:"jurusan,omitempty"`
 }
 
