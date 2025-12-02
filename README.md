@@ -91,54 +91,31 @@ PORT → port server (default 8080 kalau kosong)
    ✅ Koneksi MongoDB berhasil
    Server jalan di :8080
 
-# 🔐 Alur Penggunaan API — SIPAK (Sistem Informasi Peminjaman Alat Kampus)
 
-Dokumentasi ini menjelaskan seluruh endpoint yang tersedia dalam API SIPAK, lengkap dengan:
-- URL Endpoint  
-- Header wajib  
-- Contoh request  
-- Contoh body JSON  
+## 🔐 Alur Penggunaan API — SIPAK (Sistem Informasi Peminjaman Alat Kampus)
 
-Semua endpoint berada pada prefix:
-```
-http://127.0.0.1:3000/api
-```
-
-Untuk server hosting, sesuaikan domain Anda.
-
----
+Dokumentasi ini menjelaskan seluruh endpoint yang tersedia dalam API SIPAK.
 
 ## 📌 Header Wajib
-
-| Header | Nilai |
-|--------|--------|
-| `x-api-key` | API_KEY di .env |
-| `Authorization` | Bearer `<JWT_TOKEN>` *(hanya endpoint tertentu)* |
-
----
-
-# 🟣 AUTHENTICATION
+| Header        | Nilai                 |
+|---------------|-----------------------|
+| x-api-key     | API_KEY di .env       |
+| Authorization | Bearer `<JWT_TOKEN>`  |
 
 ## 📝 Register User
-**POST** `/api/auth/register`
-
-### 📤 Request Body
+POST http://127.0.0.1:3000/api/auth/register
 ```json
 {
-  "nama": "Kelompok 8",
-  "email": "kelompok8@mail.com",
+  "nama": "Kelompok 4",
+  "email": "kelompok4@mail.com",
   "password": "123456",
-  "nim": "A11.2024.00123",
+  "nim": "F55124000",
   "jurusan": "Teknik Informatika"
 }
 ```
 
----
-
 ## 🔑 Login User
-**POST** `/api/auth/login`
-
-### 📤 Request Body
+POST http://127.0.0.1:3000/api/auth/login
 ```json
 {
   "email": "kelompok8@mail.com",
@@ -146,36 +123,14 @@ Untuk server hosting, sesuaikan domain Anda.
 }
 ```
 
-### 📥 Response (token)
-```json
-{
-  "token": "JWT_TOKEN_HERE"
-}
-```
-
----
-
-# 🟦 ALAT (Mahasiswa & Admin)
-
 ## 📄 List Alat
-**GET** `/api/alat`
-
----
+GET http://127.0.0.1:3000/api/alat
 
 ## 🔍 Detail Alat
-**GET** `/api/alat/{id}`
+GET http://127.0.0.1:3000/api/alat/{id}
 
-Contoh:
-```
-GET /api/alat/67a35021ea8a689c444a92d0
-```
-
----
-
-# 🟥 ALAT – ADMIN ONLY
-
-## ➕ Tambah Alat
-**POST** `/api/admin/alat`
+## ➕ Tambah Alat (Admin)
+POST http://127.0.0.1:3000/api/admin/alat
 ```json
 {
   "nama": "Proyektor Epson",
@@ -185,30 +140,8 @@ GET /api/alat/67a35021ea8a689c444a92d0
 }
 ```
 
----
-
-## ✏️ Update Alat
-**PUT** `/api/admin/alat/{id}`
-```json
-{
-  "nama": "Proyektor Epson X200",
-  "kategori": "Elektronik",
-  "deskripsi": "Update spesifikasi",
-  "stok_total": 8
-}
-```
-
----
-
-## 🗑️ Hapus Alat
-**DELETE** `/api/admin/alat/{id}`
-
----
-
-# 🟩 PEMINJAMAN (User Login)
-
 ## 📦 Pinjam Alat
-**POST** `/api/peminjaman`
+POST http://127.0.0.1:3000/api/peminjaman
 ```json
 {
   "alat_id": "67a35021ea8a689c444a92d0",
@@ -216,59 +149,19 @@ GET /api/alat/67a35021ea8a689c444a92d0
 }
 ```
 
----
-
 ## 📤 Kembalikan Alat
-**POST** `/api/pengembalian/{id}`
-```
-POST /api/pengembalian/67a3790abbb123abc902f11
-```
+POST http://127.0.0.1:3000/api/pengembalian/{id}
 
----
+## 👥 List User (Admin)
+GET http://127.0.0.1:3000/api/admin/users
 
-## 📚 Riwayat Peminjaman Saya
-**GET** `/api/peminjaman/me`
-
----
-
-# 🟥 PEMINJAMAN – ADMIN ONLY
-
-## 📋 Semua Transaksi
-**GET** `/api/admin/peminjaman`
-
----
-
-# 🟧 USER MANAGEMENT – ADMIN ONLY
-
-## 👥 List User
-**GET** `/api/admin/users`
-
----
-
-## 🔄 Update Role User
-**PATCH** `/api/admin/users/{id}/role`
-
+## 🔄 Update Role User (Admin)
+PATCH http://127.0.0.1:3000/api/admin/users/{id}/role
 ```json
 {
   "role": "admin"
 }
 ```
-Atau:
-```json
-{
-  "role": "mahasiswa"
-}
-```
 
----
-
-# 🟢 STATUS SERVER
-**GET** `/`
-
-Response:
-```json
-{
-  "success": true,
-  "message": "SIPAK API berjalan 🚀"
-}
-```
+## 🟢 Status Server
+GET http://127.0.0.1:3000/
