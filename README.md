@@ -56,17 +56,13 @@ sipak/
 **Buat file .env di root project**:
 
   -`MONGO_URI=mongodb+srv://user:password@cluster0.xxxxxx.mongodb.net/?retryWrites=true&w=majority`
-  
   -`DB_NAME=sipak_db`
-  
   -`JWT_SECRET=supersecretjwt`
-  
   -`API_KEY=supersecretapikey`
 
   -`PORT=8080`
 
   -`JWT_SECRET=supersecretjwt`
-  
   -`API_KEY=supersecretapikey`
 
 Catatan:
