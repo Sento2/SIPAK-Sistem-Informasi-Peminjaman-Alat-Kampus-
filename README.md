@@ -51,3 +51,34 @@ sipak/
     ├── alat_handler.go        # CRUD alat
     ├── peminjaman_handler.go  # peminjaman & pengembalian
     └── user_handler.go        # manajemen user (admin)
+```
+⚙️ Konfigurasi Environment
+Buat file .env di root project:
+-`MONGO_URI=mongodb+srv://user:password@cluster0.xxxxxx.mongodb.net/?retryWrites=true&w=majority`
+-`DB_NAME=sipak_db`
+-`JWT_SECRET=supersecretjwt`
+-`API_KEY=supersecretapikey`
+
+-`PORT=8080`
+
+-`JWT_SECRET=supersecretjwt`
+-`API_KEY=supersecretapikey`
+
+Catatan:
+
+MONGO_URI → URI dari MongoDB Atlas
+
+DB_NAME → nama database yang akan dipakai
+
+JWT_SECRET → secret key untuk JWT
+
+API_KEY → API key yang harus dikirim via header X-API-Key
+
+PORT → port server (default 8080 kalau kosong)
+
+🚀 Cara Menjalankan Project
+1. Clone repo & masuk ke folder project:
+   
+
+PORT=8080
+
