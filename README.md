@@ -79,7 +79,4 @@ PORT → port server (default 8080 kalau kosong)
 
 🚀 Cara Menjalankan Project
 1. Clone repo & masuk ke folder project:
-   
-
-PORT=8080
 
