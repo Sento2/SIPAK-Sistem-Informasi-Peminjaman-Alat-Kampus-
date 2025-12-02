@@ -1,0 +1,53 @@
+# 🎓 SIPAK — Sistem Informasi Peminjaman Alat Kampus
+
+SIPAK adalah aplikasi **REST API** berbasis **Golang** yang digunakan untuk mengelola peminjaman alat di kampus.  
+Fitur utama:
+
+- Manajemen akun **mahasiswa** & **admin**
+- Daftar alat (CRUD alat oleh admin)
+- Peminjaman & pengembalian alat
+- Manajemen role user (admin/mahasiswa)
+- Keamanan dengan **JWT** dan **API Key**
+- Database menggunakan **MongoDB Atlas**
+
+---
+
+## 🧱 Tech Stack
+
+- **Backend**: Go + [Chi Router](https://github.com/go-chi/chi)
+- **Database**: MongoDB Atlas
+- **Auth**:
+  - JWT (JSON Web Token)
+  - API Key (header `X-API-Key`)
+- **Library utama**:
+  - `github.com/go-chi/chi/v5`
+  - `go.mongodb.org/mongo-driver`
+  - `github.com/golang-jwt/jwt/v5`
+  - `golang.org/x/crypto`
+  - `github.com/joho/godotenv`
+
+---
+
+## 📁 Struktur Folder
+
+```bash
+sipak/
+├── go.mod
+├── main.go
+├── .env               # konfigurasi environment (jangan di-commit)
+├── config/
+│   └── config.go      # koneksi MongoDB & konfigurasi global
+├── models/
+│   ├── user.go        # model User
+│   ├── alat.go        # model Alat
+│   └── transaction.go # model Transaction (peminjaman)
+├── utils/
+│   ├── jwt.go         # helper JWT
+│   └── response.go    # helper response JSON
+├── middleware/
+│   └── auth.go        # middleware API Key, JWT, AdminOnly
+└── handlers/
+    ├── auth_handler.go        # login & register
+    ├── alat_handler.go        # CRUD alat
+    ├── peminjaman_handler.go  # peminjaman & pengembalian
+    └── user_handler.go        # manajemen user (admin)
