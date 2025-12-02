@@ -65,8 +65,8 @@ sipak/
 
   -`PORT=8080`
 
-  -`JWT_SECRET=supersecretjwt`
-  -`API_KEY=supersecretapikey`
+  - `JWT_SECRET=supersecretjwt`
+  - `API_KEY=supersecretapikey`
 
 Catatan:
 
