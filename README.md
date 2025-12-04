@@ -390,11 +390,10 @@ Response:
 ---
 
 ## 👨‍💻 Tim Pengembang
-
-**Kelompok 4 - Rekayasa Perangkat Luna (RPL)**
-
 Teknik Informatika - Universitas Tadulako
 --
+**Kelompok 4 - Rekayasa Perangkat Luna (RPL)**
+
 Ketua Kelompok : Mia Islamia F5512114
 
 FrontEnd:
