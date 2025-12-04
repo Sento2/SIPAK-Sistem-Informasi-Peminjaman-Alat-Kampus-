@@ -393,9 +393,9 @@ Response:
 
 **Kelompok 4 - Rekayasa Perangkat Luna (RPL)**
 
-Ketua Kelompok : Mia Islamia F5512114
-
 Teknik Informatika - Universitas Tadulako
+--
+Ketua Kelompok : Mia Islamia F5512114
 
 FrontEnd:
 
