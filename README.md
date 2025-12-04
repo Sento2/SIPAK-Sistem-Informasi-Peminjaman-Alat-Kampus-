@@ -1,148 +1,202 @@
 # 🎓 SIPAK — Sistem Informasi Peminjaman Alat Kampus
 
-SIPAK adalah aplikasi berbasis **Golang** yang digunakan untuk mengelola peminjaman alat di kampus.  
-Fitur utama:
+<p align="center">
+  <img src="https://img.shields.io/badge/Go-1.25-00ADD8?style=for-the-badge&logo=go&logoColor=white" alt="Go Version"/>
+  <img src="https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB"/>
+  <img src="https://img.shields.io/badge/Chi_Router-v5-blue?style=for-the-badge" alt="Chi Router"/>
+  <img src="https://img.shields.io/badge/JWT-Auth-orange?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT"/>
+</p>
 
-- Manajemen akun **mahasiswa** & **admin**
-- Daftar alat (CRUD alat oleh admin)
-- Peminjaman & pengembalian alat
-- Manajemen role user (admin/mahasiswa)
-- Keamanan dengan **JWT** dan **API Key**
-- Database menggunakan **MongoDB Atlas**
+**SIPAK** adalah REST API berbasis **Golang** untuk mengelola sistem peminjaman alat di kampus. Aplikasi ini dikembangkan sebagai **Tugas Besar Rekayasa Perangkat Lunak (RPL)**.
+
+---
+
+## ✨ Fitur Utama
+
+| Fitur                 | Deskripsi                         |
+| --------------------- | --------------------------------- |
+| 🔐 **Autentikasi**    | Register & Login dengan JWT Token |
+| 👥 **Multi-Role**     | Akun Mahasiswa & Admin            |
+| 📦 **Manajemen Alat** | CRUD alat kampus (Admin only)     |
+| 🔄 **Peminjaman**     | Pinjam & kembalikan alat          |
+| 📊 **Riwayat**        | Lacak transaksi peminjaman        |
+| 🔒 **Keamanan**       | API Key + JWT Authentication      |
+| 🌐 **CORS**           | Support cross-origin requests     |
 
 ---
 
 ## 🧱 Tech Stack
 
-- **Backend**: Go + [Chi Router](https://github.com/go-chi/chi)
-- **Database**: MongoDB Atlas
-- **Auth**:
-  - JWT (JSON Web Token)
-  - API Key (header `X-API-Key`)
-- **Library utama**:
-  - `github.com/go-chi/chi/v5`
-  - `go.mongodb.org/mongo-driver`
-  - `github.com/golang-jwt/jwt/v5`
-  - `golang.org/x/crypto`
-  - `github.com/joho/godotenv`
+| Kategori             | Teknologi                                             |
+| -------------------- | ----------------------------------------------------- |
+| **Backend**          | Go 1.25 + [Chi Router](https://github.com/go-chi/chi) |
+| **Database**         | MongoDB Atlas                                         |
+| **Authentication**   | JWT (JSON Web Token) + API Key                        |
+| **Password Hashing** | bcrypt (`golang.org/x/crypto`)                        |
+
+### 📚 Library yang Digunakan
+
+```
+github.com/go-chi/chi/v5       → HTTP Router
+go.mongodb.org/mongo-driver    → MongoDB Driver
+github.com/golang-jwt/jwt/v5   → JWT Authentication
+github.com/joho/godotenv       → Environment Variables
+github.com/rs/cors             → CORS Middleware
+golang.org/x/crypto            → Password Hashing (bcrypt)
+```
 
 ---
 
-## 📁 Struktur Folder
+## 📁 Struktur Project
+
+```
+SIPAK/
+├── 📄 go.mod                  # Go module definition
+├── 📄 main.go                 # Entry point aplikasi
+├── 📄 .env                    # Environment variables (jangan di-commit!)
+├── 📁 config/
+│   └── config.go              # Konfigurasi & koneksi MongoDB
+├── 📁 models/
+│   ├── user.go                # Model User (Mahasiswa/Admin)
+│   ├── alat.go                # Model Alat Kampus
+│   └── transaction.go         # Model Transaksi Peminjaman
+├── 📁 handlers/
+│   ├── auth_handler.go        # Handler Login & Register
+│   ├── alat_handler.go        # Handler CRUD Alat
+│   ├── peminjaman_handler.go  # Handler Peminjaman & Pengembalian
+│   └── user_handler.go        # Handler Manajemen User (Admin)
+├── 📁 middleware/
+│   └── auth.go                # Middleware API Key, JWT, AdminOnly
+└── 📁 utils/
+    ├── jwt.go                 # Helper generate & validate JWT
+    └── response.go            # Helper JSON response
+```
+
+---
+
+## ⚙️ Konfigurasi Environment
+
+Buat file `.env` di root project:
+
+```env
+# MongoDB Configuration
+MONGO_URI=mongodb+srv://user:password@cluster0.xxxxx.mongodb.net/?retryWrites=true&w=majority
+DB_NAME=sipak_db
+
+# Security
+JWT_SECRET=your_super_secret_jwt_key
+API_KEY=your_super_secret_api_key
+
+# Server
+PORT=8080
+```
+
+| Variable     | Deskripsi                        |
+| ------------ | -------------------------------- |
+| `MONGO_URI`  | Connection string MongoDB Atlas  |
+| `DB_NAME`    | Nama database yang digunakan     |
+| `JWT_SECRET` | Secret key untuk signing JWT     |
+| `API_KEY`    | API Key untuk header `X-API-Key` |
+| `PORT`       | Port server (default: 8080)      |
+
+---
+
+## 🚀 Cara Menjalankan
+
+### Prerequisites
+
+- Go 1.21+ terinstall
+- Akun MongoDB Atlas (atau MongoDB lokal)
+
+### Langkah-langkah
 
 ```bash
-sipak/
-├── go.mod
-├── main.go
-├── .env               # konfigurasi environment (jangan di-commit)
-├── config/
-│   └── config.go      # koneksi MongoDB & konfigurasi global
-├── models/
-│   ├── user.go        # model User
-│   ├── alat.go        # model Alat
-│   └── transaction.go # model Transaction (peminjaman)
-├── utils/
-│   ├── jwt.go         # helper JWT
-│   └── response.go    # helper response JSON
-├── middleware/
-│   └── auth.go        # middleware API Key, JWT, AdminOnly
-└── handlers/
-    ├── auth_handler.go        # login & register
-    ├── alat_handler.go        # CRUD alat
-    ├── peminjaman_handler.go  # peminjaman & pengembalian
-    └── user_handler.go        # manajemen user (admin)
+# 1. Clone repository
+git clone https://github.com/Sento2/SIPAK-Sistem-Informasi-Peminjaman-Alat-Kampus-.git
+cd SIPAK-Sistem-Informasi-Peminjaman-Alat-Kampus-
+
+# 2. Install dependencies
+go mod tidy
+
+# 3. Buat file .env (sesuaikan dengan konfigurasi Anda)
+cp .env.example .env
+
+# 4. Jalankan server
+go run .
 ```
 
-⚙️ Konfigurasi Environment
-
-- **Buat file .env di root project**:
+Jika berhasil:
 
 ```
-  MONGO_URL=mongodb+srv://user:password@cluster0.xxxxxx.mongodb.net/?retryWrites=true&w=majority
-  DB_NAME=sipak_db
-  JWT_SECRET=supersecretjwt
-  API_KEY=supersecretapikey
-
-  PORT=8080
-
-  JWT_SECRET=supersecretjwt
-  API_KEY=supersecretapikey
+✅ Koneksi MongoDB berhasil
+Server jalan di :8080
 ```
 
-Catatan:
+---
 
-MONGO_URI → URI dari MongoDB Atlas
+## 📖 API Documentation
 
-DB_NAME → nama database yang akan dipakai
+### 📌 Header Wajib
 
-JWT_SECRET → secret key untuk JWT
+| Header          | Deskripsi            | Required                     |
+| --------------- | -------------------- | ---------------------------- |
+| `X-API-Key`     | API Key dari .env    | ✅ Semua endpoint `/api/*`   |
+| `Authorization` | `Bearer <JWT_TOKEN>` | ✅ Endpoint yang butuh login |
 
-API_KEY → API key yang harus dikirim via header X-API-Key
+---
 
-PORT → port server (default 8080 kalau kosong)
+### 🔓 Authentication Endpoints
 
-## 🚀 Cara Menjalankan Project
+#### Register User
 
-1. Clone repo & masuk ke folder project:
-   git clone https://github.com/Sento2/SIPAK-Sistem-Informasi-Peminjaman-Alat-Kampus-
-   cd SIPAK-Sistem-Informasi-Peminjaman-Alat-Kampus-
-2. Install Dependency dan Driver Mongo DB
-   go mod tidy
-   go get go.mongodb.org/mongo-driver/v2/mongo
-3. Pastikan .env sudah dibuat dengan benar.
-4. Jalankan server:
-   go run .
-5. Jika berhasil, akan muncul log:
-   ✅ Koneksi MongoDB berhasil
-   Server jalan di :8080
-
-## 🔐 Alur Penggunaan API — SIPAK (Sistem Informasi Peminjaman Alat Kampus)
-
-Dokumentasi ini menjelaskan seluruh endpoint yang tersedia dalam API SIPAK.
-
-## 📌 Header Wajib
-
-| Header        | Nilai                |
-| ------------- | -------------------- |
-| x-api-key     | API_KEY di .env      |
-| Authorization | Bearer `<JWT_TOKEN>` |
-
-## 📝 Register User
-
-POST http://127.0.0.1:3000/api/auth/register
+```http
+POST /api/auth/register
+```
 
 ```json
 {
-  "nama": "Kelompok 4",
-  "email": "kelompok4@mail.com",
+  "nama": "John Doe",
+  "email": "john@mail.com",
   "password": "123456",
-  "nim": "F55124000",
+  "nim": "F55124001",
   "jurusan": "Teknik Informatika"
 }
 ```
 
-## 🔑 Login User
+#### Login User
 
-POST http://127.0.0.1:3000/api/auth/login
+```http
+POST /api/auth/login
+```
 
 ```json
 {
-  "email": "kelompok8@mail.com",
+  "email": "john@mail.com",
   "password": "123456"
 }
 ```
 
-## 📄 List Alat
+---
 
-GET http://127.0.0.1:3000/api/alat
+### 📦 Alat Endpoints
 
-## 🔍 Detail Alat
+#### List Semua Alat
 
-GET http://127.0.0.1:3000/api/alat/{id}
+```http
+GET /api/alat
+```
 
-## ➕ Tambah Alat (Admin)
+#### Detail Alat by ID
 
-POST http://127.0.0.1:3000/api/admin/alat
+```http
+GET /api/alat/{id}
+```
+
+#### Tambah Alat (Admin Only)
+
+```http
+POST /api/admin/alat
+```
 
 ```json
 {
@@ -153,9 +207,27 @@ POST http://127.0.0.1:3000/api/admin/alat
 }
 ```
 
-## 📦 Pinjam Alat
+#### Update Alat (Admin Only)
 
-POST http://127.0.0.1:3000/api/peminjaman
+```http
+PUT /api/admin/alat/{id}
+```
+
+#### Hapus Alat (Admin Only)
+
+```http
+DELETE /api/admin/alat/{id}
+```
+
+---
+
+### 🔄 Peminjaman Endpoints
+
+#### Pinjam Alat
+
+```http
+POST /api/peminjaman
+```
 
 ```json
 {
@@ -164,17 +236,39 @@ POST http://127.0.0.1:3000/api/peminjaman
 }
 ```
 
-## 📤 Kembalikan Alat
+#### Kembalikan Alat
 
-POST http://127.0.0.1:3000/api/pengembalian/{id}
+```http
+POST /api/pengembalian/{transaction_id}
+```
 
-## 👥 List User (Admin)
+#### Riwayat Peminjaman Saya
 
-GET http://127.0.0.1:3000/api/admin/users
+```http
+GET /api/riwayat
+```
 
-## 🔄 Update Role User (Admin)
+#### List Transaksi Saya (Aktif)
 
-PATCH http://127.0.0.1:3000/api/admin/users/{id}/role
+```http
+GET /api/peminjaman/me
+```
+
+---
+
+### 👑 Admin Endpoints
+
+#### List Semua User
+
+```http
+GET /api/admin/users
+```
+
+#### Update Role User
+
+```http
+PATCH /api/admin/users/{id}/role
+```
 
 ```json
 {
@@ -182,6 +276,133 @@ PATCH http://127.0.0.1:3000/api/admin/users/{id}/role
 }
 ```
 
-## 🟢 Status Server
+#### List Semua Transaksi
 
-GET http://127.0.0.1:3000/
+```http
+GET /api/admin/peminjaman
+```
+
+#### Riwayat Semua Transaksi
+
+```http
+GET /api/admin/riwayat
+```
+
+---
+
+### 🏠 Status Server
+
+```http
+GET /
+```
+
+Response:
+
+```json
+{
+  "success": true,
+  "message": "SIPAK API berjalan 🚀"
+}
+```
+
+---
+
+## 📊 Database Schema
+
+### User Collection
+
+| Field           | Type     | Description           |
+| --------------- | -------- | --------------------- |
+| `_id`           | ObjectID | Primary key           |
+| `nama`          | string   | Nama lengkap          |
+| `email`         | string   | Email (unique)        |
+| `password_hash` | string   | Password ter-hash     |
+| `role`          | string   | `admin` / `mahasiswa` |
+| `nim`           | string   | NIM mahasiswa         |
+| `jurusan`       | string   | Jurusan               |
+| `created_at`    | datetime | Waktu registrasi      |
+
+### Alat Collection
+
+| Field           | Type     | Description        |
+| --------------- | -------- | ------------------ |
+| `_id`           | ObjectID | Primary key        |
+| `nama`          | string   | Nama alat          |
+| `kategori`      | string   | Kategori alat      |
+| `deskripsi`     | string   | Deskripsi alat     |
+| `stok_total`    | int      | Total stok         |
+| `stok_tersedia` | int      | Stok yang tersedia |
+| `created_at`    | datetime | Waktu dibuat       |
+| `updated_at`    | datetime | Waktu update       |
+
+### Transaction Collection
+
+| Field             | Type     | Description                |
+| ----------------- | -------- | -------------------------- |
+| `_id`             | ObjectID | Primary key                |
+| `user_id`         | ObjectID | FK ke User                 |
+| `alat_id`         | ObjectID | FK ke Alat                 |
+| `jumlah`          | int      | Jumlah dipinjam            |
+| `tanggal_pinjam`  | datetime | Tanggal pinjam             |
+| `tanggal_kembali` | datetime | Tanggal kembali (nullable) |
+| `status`          | string   | `PINJAM` / `KEMBALI`       |
+
+---
+
+## 🔒 Security Flow
+
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   Client    │────▶│  API Key    │────▶│    JWT      │
+│  (Request)  │     │ Middleware  │     │ Middleware  │
+└─────────────┘     └─────────────┘     └─────────────┘
+                           │                   │
+                           ▼                   ▼
+                    ┌─────────────┐     ┌─────────────┐
+                    │   Reject    │     │  Handler    │
+                    │   (401)     │     │  (Success)  │
+                    └─────────────┘     └─────────────┘
+```
+
+---
+
+## 📋 API Response Format
+
+### Success Response
+
+```json
+{
+  "success": true,
+  "message": "Pesan sukses",
+  "data": { ... }
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "message": "Pesan error"
+}
+```
+
+---
+
+## 👨‍💻 Tim Pengembang
+
+**Kelompok 4 - Tugas Besar Rekayasa Perangkat Lunak (RPL)**
+
+Teknik Informatika - Universitas Tadulako
+
+---
+
+## 📝 License
+
+Project ini dikembangkan untuk keperluan akademik (Tugas Besar Rekayasa Perangkat Lunak).
+
+---
+
+<p align="center">
+  Made with ❤️ using Go
+</p>
