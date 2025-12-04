@@ -64,6 +64,7 @@ func main() {
 			priv.Post("/peminjaman", pinjamHandler.PinjamAlat)
 			priv.Post("/pengembalian/{id}", pinjamHandler.KembalikanAlat)
 			priv.Get("/peminjaman/me", pinjamHandler.ListTransaksiUser)
+			priv.Get("/riwayat", pinjamHandler.RiwayatSaya)
 
 			// ----- Admin only group -----
 			priv.Group(func(admin chi.Router) {
@@ -81,6 +82,7 @@ func main() {
 
 				// Semua transaksi (admin)
 				admin.Get("/admin/peminjaman", pinjamHandler.ListSemuaTransaksi)
+				admin.Get("/admin/riwayat", pinjamHandler.RiwayatSemua)
 			})
 		})
 	})

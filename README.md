@@ -52,8 +52,11 @@ sipak/
     ├── peminjaman_handler.go  # peminjaman & pengembalian
     └── user_handler.go        # manajemen user (admin)
 ```
+
 ⚙️ Konfigurasi Environment
+
 - **Buat file .env di root project**:
+
 ```
   MONGO_URL=mongodb+srv://user:password@cluster0.xxxxxx.mongodb.net/?retryWrites=true&w=majority
   DB_NAME=sipak_db
@@ -61,10 +64,11 @@ sipak/
   API_KEY=supersecretapikey
 
   PORT=8080
-  
+
   JWT_SECRET=supersecretjwt
   API_KEY=supersecretapikey
 ```
+
 Catatan:
 
 MONGO_URI → URI dari MongoDB Atlas
@@ -78,6 +82,7 @@ API_KEY → API key yang harus dikirim via header X-API-Key
 PORT → port server (default 8080 kalau kosong)
 
 ## 🚀 Cara Menjalankan Project
+
 1. Clone repo & masuk ke folder project:
    git clone https://github.com/Sento2/SIPAK-Sistem-Informasi-Peminjaman-Alat-Kampus-
    cd SIPAK-Sistem-Informasi-Peminjaman-Alat-Kampus-
@@ -91,19 +96,21 @@ PORT → port server (default 8080 kalau kosong)
    ✅ Koneksi MongoDB berhasil
    Server jalan di :8080
 
-
 ## 🔐 Alur Penggunaan API — SIPAK (Sistem Informasi Peminjaman Alat Kampus)
 
 Dokumentasi ini menjelaskan seluruh endpoint yang tersedia dalam API SIPAK.
 
 ## 📌 Header Wajib
-| Header        | Nilai                 |
-|---------------|-----------------------|
-| x-api-key     | API_KEY di .env       |
-| Authorization | Bearer `<JWT_TOKEN>`  |
+
+| Header        | Nilai                |
+| ------------- | -------------------- |
+| x-api-key     | API_KEY di .env      |
+| Authorization | Bearer `<JWT_TOKEN>` |
 
 ## 📝 Register User
+
 POST http://127.0.0.1:3000/api/auth/register
+
 ```json
 {
   "nama": "Kelompok 4",
@@ -115,7 +122,9 @@ POST http://127.0.0.1:3000/api/auth/register
 ```
 
 ## 🔑 Login User
+
 POST http://127.0.0.1:3000/api/auth/login
+
 ```json
 {
   "email": "kelompok8@mail.com",
@@ -124,13 +133,17 @@ POST http://127.0.0.1:3000/api/auth/login
 ```
 
 ## 📄 List Alat
+
 GET http://127.0.0.1:3000/api/alat
 
 ## 🔍 Detail Alat
+
 GET http://127.0.0.1:3000/api/alat/{id}
 
 ## ➕ Tambah Alat (Admin)
+
 POST http://127.0.0.1:3000/api/admin/alat
+
 ```json
 {
   "nama": "Proyektor Epson",
@@ -141,7 +154,9 @@ POST http://127.0.0.1:3000/api/admin/alat
 ```
 
 ## 📦 Pinjam Alat
+
 POST http://127.0.0.1:3000/api/peminjaman
+
 ```json
 {
   "alat_id": "67a35021ea8a689c444a92d0",
@@ -150,13 +165,17 @@ POST http://127.0.0.1:3000/api/peminjaman
 ```
 
 ## 📤 Kembalikan Alat
+
 POST http://127.0.0.1:3000/api/pengembalian/{id}
 
 ## 👥 List User (Admin)
+
 GET http://127.0.0.1:3000/api/admin/users
 
 ## 🔄 Update Role User (Admin)
+
 PATCH http://127.0.0.1:3000/api/admin/users/{id}/role
+
 ```json
 {
   "role": "admin"
@@ -164,4 +183,5 @@ PATCH http://127.0.0.1:3000/api/admin/users/{id}/role
 ```
 
 ## 🟢 Status Server
+
 GET http://127.0.0.1:3000/
