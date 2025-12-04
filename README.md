@@ -409,7 +409,7 @@ Moh Fiqih F55124108
 
 ## 📝 License
 
-Project ini dikembangkan untuk keperluan akademik (Tugas Besar Rekayasa Perangkat Lunak).
+Project ini dikembangkan untuk keperluan akademik (Tugas Rekayasa Perangkat Lunak).
 
 ---
 
