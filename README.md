@@ -393,11 +393,17 @@ Response:
 
 **Kelompok 4 - Rekayasa Perangkat Luna (RPL)**
 Ketua Kelompok : Mia Islamia F5512114
+
 Teknik Informatika - Universitas Tadulako
+
 FrontEnd:
+
 Moh Reza Dwi Syahputra F55124085
+
 BackEnd :
+
 Moh Magribi Ramadhan F55124104
+
 Moh Fiqih F55124108
 ---
 
